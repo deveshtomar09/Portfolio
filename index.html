@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Devesh Tomar — Computer Science postgraduate, frontend developer and software development enthusiast." />
+  <title>Devesh Tomar | Developer Portfolio</title>
+  <style>
+    :root {
+      --bg: #080d18;
+      --surface: #101a2b;
+      --surface-2: #142238;
+      --text: #edf3ff;
+      --muted: #a5b2c8;
+      --accent: #66e3c4;
+      --accent-2: #7aa7ff;
+      --border: rgba(255,255,255,.10);
+      --shadow: 0 18px 55px rgba(0,0,0,.28);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 85% 8%, rgba(64,116,190,.16), transparent 28rem),
+        radial-gradient(circle at 8% 35%, rgba(47,190,158,.09), transparent 26rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(8,13,24,.82); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { height: 76px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.18rem; font-weight: 800; letter-spacing: -.04em; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 27px; list-style: none; }
+    .nav-links a { color: var(--muted); font-size: .92rem; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .menu-btn {
+      display: none; border: 1px solid var(--border); background: var(--surface);
+      color: var(--text); border-radius: 10px; padding: 8px 11px; cursor: pointer;
+    }
+    .hero { min-height: 690px; display: grid; align-items: center; padding: 90px 0 105px; }
+    .hero-grid { display: grid; grid-template-columns: 1.35fr .85fr; align-items: center; gap: 60px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px; color: var(--accent);
+      background: rgba(102,227,196,.08); border: 1px solid rgba(102,227,196,.2);
+      padding: 7px 13px; border-radius: 999px; font-size: .82rem; font-weight: 650;
+      margin-bottom: 23px;
+    }
+    .status-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+    h1 { font-size: clamp(2.8rem, 6vw, 5.25rem); line-height: 1.04; letter-spacing: -.065em; margin-bottom: 20px; }
+    .gradient-text { background: linear-gradient(100deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-subtitle { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); max-width: 650px; margin-bottom: 30px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; }
+    .btn {
+      display: inline-flex; justify-content: center; align-items: center; gap: 9px;
+      padding: 12px 19px; border-radius: 12px; font-weight: 700; font-size: .94rem;
+      border: 1px solid var(--border); transition: transform .2s, background .2s, border-color .2s;
+      cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-primary { color: #071510; background: var(--accent); border-color: var(--accent); }
+    .btn-primary:hover { background: #83f0d5; }
+    .btn-secondary { background: rgba(255,255,255,.035); color: var(--text); }
+    .btn-secondary:hover { border-color: var(--accent); }
+    .hero-card {
+      position: relative; background: linear-gradient(145deg, rgba(20,34,56,.95), rgba(12,21,36,.95));
+      border: 1px solid var(--border); border-radius: 28px; padding: 30px; box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-card::before { content: ""; position: absolute; width: 190px; height: 190px; right: -75px; top: -75px; border-radius: 50%; background: rgba(102,227,196,.12); filter: blur(2px); }
+    .code-window { position: relative; border: 1px solid var(--border); border-radius: 15px; overflow: hidden; background: #0a1220; }
+    .window-top { padding: 12px 15px; display: flex; gap: 7px; border-bottom: 1px solid var(--border); }
+    .window-top i { width: 9px; height: 9px; border-radius: 50%; background: #f27d7d; }
+    .window-top i:nth-child(2) { background: #e8c46c; }
+    .window-top i:nth-child(3) { background: #68d7a4; }
+    .code-content { padding: 23px 19px; font: .88rem/2 "SFMono-Regular", Consolas, monospace; color: #c5d2e7; }
+    .code-content .key { color: #7aa7ff; }
+    .code-content .value { color: #66e3c4; }
+    .code-content .comment { color: #75849d; }
+    .quick-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-top: 17px; }
+    .stat { padding: 14px; background: rgba(255,255,255,.035); border: 1px solid var(--border); border-radius: 13px; }
+    .stat strong { display: block; font-size: 1.35rem; color: var(--accent); }
+    .stat span { color: var(--muted); font-size: .78rem; }
+    section { padding: 88px 0; }
+    .section-head { margin-bottom: 38px; }
+    .section-kicker { color: var(--accent); text-transform: uppercase; letter-spacing: .16em; font-size: .75rem; font-weight: 800; }
+    h2 { font-size: clamp(2rem, 4vw, 2.8rem); letter-spacing: -.045em; line-height: 1.15; margin-top: 8px; }
+    .section-desc { color: var(--muted); max-width: 650px; margin-top: 12px; }
+    .about-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; }
+    .panel { background: linear-gradient(145deg, rgba(20,34,56,.82), rgba(13,23,39,.9)); border: 1px solid var(--border); border-radius: var(--radius); padding: 27px; }
+    .panel p { color: var(--muted); }
+    .info-list { display: grid; gap: 15px; margin-top: 21px; }
+    .info-row { display: flex; justify-content: space-between; gap: 15px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .info-row:last-child { border: 0; padding-bottom: 0; }
+    .info-row span:first-child { color: var(--muted); }
+    .info-row span:last-child { text-align: right; font-weight: 650; }
+    .skill-groups { display: grid; grid-template-columns: repeat(2,1fr); gap: 17px; }
+    .skill-group h3 { font-size: 1rem; margin-bottom: 13px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { padding: 7px 11px; border: 1px solid rgba(122,167,255,.18); background: rgba(122,167,255,.07); color: #c9d8f4; border-radius: 9px; font-size: .82rem; }
+    .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    .project-card {
+      background: linear-gradient(145deg, rgba(20,34,56,.88), rgba(13,23,39,.92));
+      border: 1px solid var(--border); border-radius: var(--radius); padding: 25px;
+      transition: transform .25s, border-color .25s; display: flex; flex-direction: column;
+    }
+    .project-card:hover { transform: translateY(-6px); border-color: rgba(102,227,196,.45); }
+    .project-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .project-icon { width: 45px; height: 45px; display: grid; place-items: center; border-radius: 13px; background: rgba(102,227,196,.1); color: var(--accent); font-size: 1.3rem; }
+    .project-type { color: var(--muted); font-size: .78rem; }
+    .project-card h3 { font-size: 1.25rem; margin-bottom: 9px; }
+    .project-card p { color: var(--muted); font-size: .93rem; flex: 1; }
+    .project-card .tags { margin-top: 18px; }
+    .timeline { display: grid; gap: 17px; }
+    .timeline-item { display: grid; grid-template-columns: 150px 1fr; gap: 22px; padding: 22px 24px; background: rgba(16,26,43,.72); border: 1px solid var(--border); border-radius: 16px; }
+    .timeline-date { color: var(--accent); font-weight: 750; font-size: .9rem; }
+    .timeline-item h3 { font-size: 1.08rem; }
+    .timeline-item p { color: var(--muted); font-size: .91rem; margin-top: 4px; }
+    .cert-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 13px; }
+    .cert { display: flex; align-items: center; gap: 13px; padding: 17px; background: rgba(16,26,43,.72); border: 1px solid var(--border); border-radius: 14px; }
+    .cert-icon { color: var(--accent); font-size: 1.2rem; }
+    .cert span:last-child { font-weight: 650; font-size: .92rem; }
+    .achievement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .bullet-list { list-style: none; display: grid; gap: 13px; margin-top: 17px; }
+    .bullet-list li { color: var(--muted); padding-left: 23px; position: relative; }
+    .bullet-list li::before { content: "↗"; color: var(--accent); position: absolute; left: 0; font-weight: 800; }
+    .interest-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .interest-tags span { padding: 10px 13px; border-radius: 11px; background: rgba(102,227,196,.07); border: 1px solid rgba(102,227,196,.17); color: #c5f5e9; font-size: .88rem; }
+    .contact-box { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 25px; padding: 35px; border-radius: 24px; background: linear-gradient(120deg, rgba(25,65,75,.55), rgba(20,34,56,.92)); border: 1px solid rgba(102,227,196,.2); }
+    .contact-box p { color: var(--muted); margin-top: 9px; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 21px; }
+    footer { border-top: 1px solid var(--border); padding: 25px 0; color: var(--muted); font-size: .86rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 850px) {
+      .hero-grid, .about-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding: 75px 0; }
+      .hero-card { max-width: 560px; }
+      .nav-links { gap: 15px; }
+    }
+    @media (max-width: 650px) {
+      .container { width: min(100% - 30px, 1120px); }
+      .menu-btn { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 76px; left: 0; right: 0; padding: 18px 22px 22px;
+        background: #0b1423; border-bottom: 1px solid var(--border); flex-direction: column; align-items: flex-start;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { display: block; padding: 5px 0; }
+      section { padding: 66px 0; }
+      .projects-grid, .skill-groups, .cert-grid, .achievement-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 5px; }
+      .contact-box { grid-template-columns: 1fr; padding: 25px; }
+      .hero-grid { gap: 35px; }
+      h1 { font-size: clamp(2.7rem, 13vw, 4.2rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="#home">Devesh<span>.</span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="status-dot"></span> Computer Science & Engineering</div>
+          <h1>Hi, I'm <span class="gradient-text">Devesh Tomar</span></h1>
+          <p class="hero-subtitle">A Computer Science postgraduate and frontend development enthusiast who enjoys building responsive web experiences, integrating APIs, and solving problems through technology.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">Explore My Work <span>↗</span></a>
+            <a class="btn btn-secondary" href="mailto:ds4957@srmist.edu.in">Contact Me</a>
+          </div>
+        </div>
+        <div class="hero-card reveal">
+          <div class="code-window">
+            <div class="window-top"><i></i><i></i><i></i></div>
+            <div class="code-content">
+              <div class="comment">// A little about me</div>
+              <div><span class="key">const</span> developer = {</div>
+              <div>&nbsp;&nbsp;name: <span class="value">"Devesh Tomar"</span>,</div>
+              <div>&nbsp;&nbsp;degree: <span class="value">"M.Tech CSE"</span>,</div>
+              <div>&nbsp;&nbsp;focus: <span class="value">"Frontend Development"</span>,</div>
+              <div>&nbsp;&nbsp;location: <span class="value">"Uttar Pradesh, India"</span>,</div>
+              <div>&nbsp;&nbsp;mindset: <span class="value">"Always Learning"</span></div>
+              <div>};</div>
+              <div class="comment" style="margin-top:10px">// Turning ideas into useful products.</div>
+            </div>
+          </div>
+          <div class="quick-stats">
+            <div class="stat"><strong>8.20</strong><span>M.Tech CGPA</span></div>
+            <div class="stat"><strong>4+</strong><span>Featured projects</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal"><div class="section-kicker">Introduction</div><h2>About Me</h2><p class="section-desc">A brief introduction to my academic background and development interests.</p></div>
+        <div class="about-grid">
+          <div class="panel reveal">
+            <p>I am pursuing an M.Tech in Computer Science and Engineering at SRM Institute of Science and Technology. I have a foundation in computer science from my B.Tech and practical experience building frontend projects with HTML, CSS, JavaScript, and Tailwind CSS.</p>
+            <p style="margin-top:14px">I enjoy creating responsive interfaces, working with REST APIs, exploring data analytics, and continuously improving my problem-solving and software development skills.</p>
+          </div>
+          <div class="panel reveal">
+            <h3>Quick Information</h3>
+            <div class="info-list">
+              <div class="info-row"><span>Full name</span><span>Devesh Tomar</span></div>
+              <div class="info-row"><span>Location</span><span>Muzaffarnagar, UP</span></div>
+              <div class="info-row"><span>Email</span><span>ds4957@srmist.edu.in</span></div>
+              <div class="info-row"><span>Phone</span><span>+91 7983115672</span></div>
+              <div class="info-row"><span>Current degree</span><span>M.Tech CSE</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head reveal"><div class="section-kicker">What I work with</div><h2>Technical Skills</h2><p class="section-desc">Technologies and core subjects listed in my resume.</p></div>
+        <div class="skill-groups">
+          <div class="panel skill-group reveal"><h3>Programming Languages</h3><div class="tags"><span class="tag">C++</span><span class="tag">C</span><span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">SQL</span></div></div>
+          <div class="panel skill-group reveal"><h3>Web Technologies</h3><div class="tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">Tailwind CSS</span><span class="tag">Node.js</span><span class="tag">JavaScript</span></div></div>
+          <div class="panel skill-group reveal"><h3>Libraries & Databases</h3><div class="tags"><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">MySQL</span></div></div>
+          <div class="panel skill-group reveal"><h3>Tools & Core Subjects</h3><div class="tags"><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">Prompt Engineering</span><span class="tag">DSA</span><span class="tag">DBMS</span><span class="tag">OOPs</span><span class="tag">Operating Systems</span><span class="tag">Computer Networks</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head reveal"><div class="section-kicker">Selected work</div><h2>Featured Projects</h2><p class="section-desc">A selection of projects and practical work from my development journey.</p></div>
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-top"><div class="project-icon">☁</div><span class="project-type">Frontend / API</span></div>
+            <h3>Weather Forecast</h3>
+            <p>Built a real-time weather forecasting application using Weather API integration. Displays live temperature, humidity, wind speed, and weather conditions through a responsive, user-friendly interface.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Weather API</span></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-top"><div class="project-icon">▣</div><span class="project-type">Web Development</span></div>
+            <h3>Responsive Portfolio</h3>
+            <p>Designed and developed a responsive personal portfolio website to showcase technical skills, projects, certifications, and achievements across different screen sizes.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-top"><div class="project-icon">◈</div><span class="project-type">Frontend Project</span></div>
+            <h3>Razorpay Clone Website</h3>
+            <p>Created a responsive recreation of the Razorpay landing page using modern UI components, Flexbox, CSS Grid, and animations.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Tailwind CSS</span><span class="tag">JavaScript</span></div>
+          </article>
+          <article class="project-card reveal">
+            <div class="project-top"><div class="project-icon">▥</div><span class="project-type">Data Analytics</span></div>
+            <h3>WAChatDive</h3>
+            <p>Developed a Streamlit application for WhatsApp chat analysis, generating visual insights into user activity, message trends, word frequency, and sentiment patterns.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="container">
+        <div class="section-head reveal"><div class="section-kicker">Academic background</div><h2>Education</h2></div>
+        <div class="timeline">
+          <div class="timeline-item reveal"><div class="timeline-date">2025 – 2027</div><div><h3>M.Tech — Computer Science and Engineering</h3><p>SRM Institute of Science and Technology (SRMIST), Delhi-NCR, Ghaziabad · CGPA: 8.20</p></div></div>
+          <div class="timeline-item reveal"><div class="timeline-date">2021 – 2025</div><div><h3>B.Tech — Computer Science and Engineering</h3><p>SRM Institute of Science and Technology (SRMIST), Delhi-NCR, Ghaziabad · CGPA: 8.24</p></div></div>
+          <div class="timeline-item reveal"><div class="timeline-date">2021</div><div><h3>Intermediate (Class XII) — CBSE</h3><p>Delhi Public School, Muzaffarnagar · 83%</p></div></div>
+          <div class="timeline-item reveal"><div class="timeline-date">2019</div><div><h3>High School (Class X) — CBSE</h3><p>Delhi Public School, Muzaffarnagar · 78%</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certifications">
+      <div class="container">
+        <div class="section-head reveal"><div class="section-kicker">Learning</div><h2>Certifications</h2></div>
+        <div class="cert-grid">
+          <div class="cert reveal"><span class="cert-icon">✦</span><span>Google Cloud Fundamentals</span></div>
+          <div class="cert reveal"><span class="cert-icon">✦</span><span>Data Science Tools (Python & SQL)</span></div>
+          <div class="cert reveal"><span class="cert-icon">✦</span><span>Introduction to Java</span></div>
+          <div class="cert reveal"><span class="cert-icon">✦</span><span>HTML, CSS & JavaScript Development</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="highlights">
+      <div class="container">
+        <div class="section-head reveal"><div class="section-kicker">Beyond the code</div><h2>Achievements & Interests</h2></div>
+        <div class="achievement-grid">
+          <div class="panel reveal">
+            <h3>Highlights</h3>
+            <ul class="bullet-list">
+              <li>Built multiple responsive web applications using modern frontend technologies.</li>
+              <li>Hands-on experience in API integration, responsive web development, and UI optimization.</li>
+              <li>Participated in college hackathons and technical events, collaborating with teams on software solutions.</li>
+              <li>Continuously developing skills in problem-solving and software development.</li>
+            </ul>
+          </div>
+          <div class="panel reveal">
+            <h3>Areas of Interest</h3>
+            <div class="interest-tags"><span>Frontend Development</span><span>Cloud Computing</span><span>Data Analytics</span><span>Problem Solving</span><span>Basketball</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-box reveal">
+          <div>
+            <div class="section-kicker">Get in touch</div>
+            <h2>Let's connect.</h2>
+            <p>Have an opportunity, project idea, or just want to discuss technology? Feel free to reach out.</p>
+            <div class="contact-links">
+              <a class="btn btn-primary" href="mailto:ds4957@srmist.edu.in">✉ Send an Email</a>
+              <a class="btn btn-secondary" href="tel:+917983115672">☎ Call Me</a>
+              <button class="btn btn-secondary" id="copyEmail" type="button">Copy Email</button>
+            </div>
+          </div>
+          <div>
+            <p><strong style="color:var(--text)">Email</strong><br>ds4957@srmist.edu.in</p>
+            <p style="margin-top:15px"><strong style="color:var(--text)">Phone</strong><br>+91 7983115672</p>
+            <p style="margin-top:15px"><strong style="color:var(--text)">Location</strong><br>Muzaffarnagar, Uttar Pradesh</p>
+          </div>
+        </div>
+        <p style="color:var(--muted);font-size:.8rem;margin-top:16px">Social profile URLs were not included in the resume. Add your actual LinkedIn, GitHub, and LeetCode links before publishing.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Devesh Tomar. All rights reserved.</span>
+      <span>Designed & built with HTML, CSS and JavaScript.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile navigation
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    menuBtn.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+      menuBtn.textContent = isOpen ? "✕" : "☰";
+    });
+
+    // Close mobile menu after selecting a section
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+        menuBtn.textContent = "☰";
+      });
+    });
+
+    // Reveal elements as they enter the viewport
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+
+    // Highlight the active navigation link
+    const sections = document.querySelectorAll("main section[id]");
+    const navAnchors = document.querySelectorAll(".nav-links a");
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach(anchor => {
+            anchor.classList.toggle("active", anchor.getAttribute("href") === `#${entry.target.id}`);
+          });
+        }
+      });
+    }, { rootMargin: "-35% 0px -55% 0px" });
+    sections.forEach(section => sectionObserver.observe(section));
+
+    // Copy email address
+    document.getElementById("copyEmail").addEventListener("click", async () => {
+      const button = document.getElementById("copyEmail");
+      try {
+        await navigator.clipboard.writeText("ds4957@srmist.edu.in");
+        button.textContent = "Copied!";
+      } catch {
+        button.textContent = "Email: ds4957@srmist.edu.in";
+      }
+      setTimeout(() => button.textContent = "Copy Email", 2200);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
